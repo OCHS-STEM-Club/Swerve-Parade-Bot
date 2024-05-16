@@ -17,6 +17,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.SirenSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
+
 import java.io.File;
 
 /**
@@ -30,6 +34,9 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                          "swerve/neo"));
+  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final SirenSubsystem m_sirenSubsystem = new SirenSubsystem();
+  private final TurretSubsystem m_turretSubsystem = new TurretSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(0);
