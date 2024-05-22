@@ -9,25 +9,23 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
-/** Add your docs here. */
-public class ShooterSubsystem {
+public class ShooterSubsystem extends SubsystemBase {
+  /** Creates a new Shooter. */
+  private WPI_TalonSRX shooterSolenoid;
+  public ShooterSubsystem() {
+    shooterSolenoid = new WPI_TalonSRX(ShooterConstants.shooterSolenoidID);//TODO:CAN ID will change
+  }
 
-    private WPI_TalonSRX shooterSolenoid;
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 
-    public ShooterSubsystem() {
-        shooterSolenoid = new WPI_TalonSRX(ShooterConstants.shooterSolenoidID);//TODO:CAN ID will change
-    }
+  public void solenoidOpen() {
+    shooterSolenoid.setVoltage(ShooterConstants.shooterSolenoidOpenVoltage);
+  }
 
-    @Override
-    public void periodic() {
-// This method will be called once per scheduler run
-    }
-
-    public void solenoidOpen() {
-        shooterSolenoid.setVoltage(ShooterConstants.shooterSolenoidOpenVoltage);
-    }
-
-    public void solenoidClose(){
-        shooterSolenoid.setVoltage(ShooterConstants.shooterSolenoidClosedVoltage);
-    }  
+  public void solenoidClose(){
+    shooterSolenoid.setVoltage(ShooterConstants.shooterSolenoidClosedVoltage);
+  }
 }

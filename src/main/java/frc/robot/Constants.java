@@ -49,6 +49,11 @@ public final class Constants
     public static final double TURN_CONSTANT    = 6;
   }
 
+  public static class BufferTankConstants {
+    public static final int bufferTankSolenoidChannel = 0;
+    public static final int pressureSensorChannel = 3;
+  }
+
   public static class ShooterConstants {
     public static final int shooterSolenoidID = 5;
     public static final int shooterSolenoidOpenVoltage = 12;
@@ -67,4 +72,6 @@ public final class Constants
     public static final double turretSpeed = 0.25;
     public static final double turretStop = 0;
   }
+
+
 }
