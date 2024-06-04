@@ -10,7 +10,7 @@
     "canbus": null
   },
   "encoder": {
-    "type": "throughbore",
+    "type": "cancoder",
     "id": 11,
     "canbus": null
   },

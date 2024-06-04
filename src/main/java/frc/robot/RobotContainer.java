@@ -16,12 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
-import frc.robot.subsystems.BufferTankSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.SirenSubsystem;
-import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.subsystems.TurretSubsystem;
-
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
 /**
@@ -35,10 +30,6 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                          "swerve/neo"));
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final SirenSubsystem m_sirenSubsystem = new SirenSubsystem();
-  private final TurretSubsystem m_turretSubsystem = new TurretSubsystem();
-  private final BufferTankSubsystem m_bufferTankSubsystem = new BufferTankSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -104,52 +95,12 @@ public class RobotContainer
   {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-    driverXbox.a().onTrue(
-      (Commands.runOnce(drivebase::zeroGyro))
-      );
-
-    // driverXbox.x().onTrue(
-    //   Commands.runOnce(drivebase::addFakeVisionReading)
-    //   );
-
-    // driverXbox.b().whileTrue(
-    //     Commands.deferredProxy(() -> drivebase.driveToPose(
-    //                                new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
-    //                           ));
-    
-
-    
-    driverXbox.leftTrigger().whileTrue(
-      Commands.runOnce(m_bufferTankSubsystem::fillBufferTank)
-    );
-
-    driverXbox.leftTrigger().whileFalse(
-      Commands.runOnce(m_bufferTankSubsystem::stopFillBufferTank)
-    );
-
-    driverXbox.rightTrigger().whileTrue(
-      Commands.runOnce(m_shooterSubsystem::solenoidOpen)
-    );
-
-    driverXbox.rightTrigger().whileFalse(
-      Commands.runOnce(m_shooterSubsystem::solenoidClose)
-    );
-
-    driverXbox.leftBumper().whileTrue(
-      Commands.runOnce(m_turretSubsystem::turretLeft)
-    );
-
-    driverXbox.leftBumper().whileFalse(
-      Commands.runOnce(m_turretSubsystem::turretRight)
-    );
-
-    driverXbox.rightBumper().whileTrue(
-      Commands.runOnce(m_turretSubsystem::turretRight)
-    );
-
-    driverXbox.rightBumper().whileFalse(
-      Commands.runOnce(m_turretSubsystem::turretStop)
-    );
+    driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+    driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
+    driverXbox.b().whileTrue(
+        Commands.deferredProxy(() -> drivebase.driveToPose(
+                                   new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
+                              ));
     // driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
   }
 
