@@ -48,4 +48,11 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
   }
+
+  public static class SirenConstants {
+    public static final int sirenMotorID = 6;
+    public static final int sirenRampRate = 3;
+    public static final int sirenOnVoltage = 9;
+    public static final int sirenOffVoltage = 0;
+  }
 }
