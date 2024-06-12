@@ -16,9 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AbsoluteDriveAdv;
-import frc.robot.subsystems.CannonSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.subsystems.SirenSubsystem;
 
 import java.io.File;
 
@@ -35,6 +33,7 @@ public class RobotContainer
                                                                          "swerve/neo"));
   private final CannonSubsystem m_cannonSubsystem = new CannonSubsystem();
   private final SirenSubsystem m_sirenSubsystem = new SirenSubsystem();
+
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(0);
