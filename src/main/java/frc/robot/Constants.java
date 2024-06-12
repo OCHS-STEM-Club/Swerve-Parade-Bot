@@ -68,10 +68,8 @@ public final class Constants
     public static final double turretStop = 0;
   }
 
-  public static class SirenConstants {
-    public static final int sirenMotorID = 6;
-    public static final int sirenRampRate = 3;
-    public static final int sirenOnVoltage = 9;
-    public static final int sirenOffVoltage = 0;
+  public static class BufferTankConstants {
+    public static final int bufferTankSolenoidChannel = 0;
+    public static final int pressureSensorChannel = 3;
   }
 }

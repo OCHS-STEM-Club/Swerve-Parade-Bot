@@ -15,8 +15,11 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AbsoluteDriveAdv;
-import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
+import frc.robot.subsystems.BufferTankSubsystem;
+import frc.robot.subsystems.CannonSubsystem;
+import frc.robot.subsystems.SirenSubsystem;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 import java.io.File;
 
@@ -33,6 +36,7 @@ public class RobotContainer
                                                                          "swerve/neo"));
   private final CannonSubsystem m_cannonSubsystem = new CannonSubsystem();
   private final SirenSubsystem m_sirenSubsystem = new SirenSubsystem();
+  private final BufferTankSubsystem m_bufferTankSubsystem = new BufferTankSubsystem();
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -109,7 +113,14 @@ public class RobotContainer
       Commands.runOnce(m_sirenSubsystem::sirenOff)
     );
 
+    driverXbox.leftTrigger().whileTrue(
+      Commands.runOnce(m_bufferTankSubsystem::fillBufferTank)
+    );
 
+    driverXbox.leftTrigger().whileFalse(
+      Commands.runOnce(m_bufferTankSubsystem::stopFillBufferTank)
+    );
+    
     driverXbox.leftBumper().whileTrue(
       Commands.runOnce(m_cannonSubsystem::shooterOpen)
     );
