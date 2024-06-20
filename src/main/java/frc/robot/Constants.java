@@ -47,29 +47,29 @@ public final class Constants
     public static final double LEFT_Y_DEADBAND  = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
+
+    public static final int DRIVER_CONTROLLER_PORT = 0;
   }
 
   public static class ShooterConstants {
-    public static final int shooterSolenoidID = 5;
+    public static final int shooterSolenoidID = 20;
     public static final int shooterSolenoidOpenVoltage = 12;
     public static final int shooterSolenoidClosedVoltage = 0;
+    public static final int pressureSensorPort = 3;
   }
 
   public static class SirenConstants {
-    public static final int sirenMotorID = 6;
+    public static final int sirenMotorID = 18;
     public static final int sirenRampRate = 3;
     public static final int sirenOnVoltage = 9;
     public static final int sirenOffVoltage = 0;
   }
 
-  public static class TurretConstants {
-    public static final int turretMotorID = 9;
-    public static final double turretSpeed = 0.25;
-    public static final double turretStop = 0;
+  public static class CanonConstants {
+    public static final int canonMotorID = 21;
+    public static final double canonSpeed = 0.4;
+    public static final double canonStop = 0;
   }
 
-  public static class BufferTankConstants {
-    public static final int bufferTankSolenoidChannel = 0;
-    public static final int pressureSensorChannel = 3;
-  }
+
 }

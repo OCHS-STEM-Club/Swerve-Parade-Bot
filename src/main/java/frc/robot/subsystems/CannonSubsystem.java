@@ -9,6 +9,9 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.SirenConstants;
+import frc.robot.Constants.CanonConstants;
+import frc.robot.Constants.ShooterConstants;
 
 public class CannonSubsystem extends SubsystemBase {
   /** Creates a new cannonSubsystem. */
@@ -18,12 +21,18 @@ public class CannonSubsystem extends SubsystemBase {
 
   private CANSparkMax cannonMotor;
 
+  private WPI_TalonSRX sirenMotor;
+
   public CannonSubsystem() {
-    shooterSolenoid = new WPI_TalonSRX(20);
+    shooterSolenoid = new WPI_TalonSRX(ShooterConstants.shooterSolenoidID);
 
-    pressureSensor = new AnalogInput(3);
+    pressureSensor = new AnalogInput(ShooterConstants.pressureSensorPort);
 
-    cannonMotor = new CANSparkMax(21, MotorType.kBrushless);
+    cannonMotor = new CANSparkMax(CanonConstants.canonMotorID, MotorType.kBrushless);
+
+    sirenMotor = new WPI_TalonSRX(SirenConstants.sirenMotorID);
+
+
   }
 
   @Override
@@ -32,11 +41,11 @@ public class CannonSubsystem extends SubsystemBase {
   }
 
   public void shooterOpen() {
-    shooterSolenoid.setVoltage(12);
+    shooterSolenoid.setVoltage(ShooterConstants.shooterSolenoidOpenVoltage);
   }
 
   public void shooterClose() {
-    shooterSolenoid.setVoltage(0);
+    shooterSolenoid.setVoltage(ShooterConstants.shooterSolenoidClosedVoltage);
   }
 
   public double getPressureSensor() { 
@@ -44,10 +53,25 @@ public class CannonSubsystem extends SubsystemBase {
   }
 
   public void cannonUp() {
-    cannonMotor.set(0.2);
+    cannonMotor.set(CanonConstants.canonSpeed);
   }
 
   public void cannonDown() {
-    cannonMotor.set(-0.2);
+    cannonMotor.set(-CanonConstants.canonSpeed);
   }
+
+  public void cannonStop() {
+    cannonMotor.set(CanonConstants.canonStop);
+  }
+
+  public void sirenOn() {
+    sirenMotor.configOpenloopRamp(SirenConstants.sirenRampRate);
+    sirenMotor.setVoltage(SirenConstants.sirenOnVoltage);
+  }
+
+  public void sirenOff() {
+    sirenMotor.configOpenloopRamp(SirenConstants.sirenRampRate);
+    sirenMotor.setVoltage(SirenConstants.sirenOffVoltage);
+  }
+
 }
