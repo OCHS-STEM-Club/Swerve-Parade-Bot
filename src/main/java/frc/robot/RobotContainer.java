@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Cannon.CannonDownCmd;
 import frc.robot.commands.Cannon.CannonUpCmd;
+import frc.robot.commands.Shooter.ShooterOpenCmd;
+import frc.robot.commands.Siren.SirenOnCmd;
 import frc.robot.subsystems.CannonSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -36,6 +38,10 @@ public class RobotContainer
   private final CannonUpCmd m_cannonUpCmd = new CannonUpCmd(m_cannonSubsystem);
   private final CannonDownCmd m_cannonDownCmd = new CannonDownCmd(m_cannonSubsystem);
 
+  private final ShooterOpenCmd m_shooterOpenCmd = new ShooterOpenCmd(m_cannonSubsystem);
+
+  private final SirenOnCmd m_sirenOnCmd = new SirenOnCmd(m_cannonSubsystem);
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
 
@@ -47,28 +53,15 @@ public class RobotContainer
     // Configure the trigger bindings
     configureBindings();
 
-
-
-    // Applies deadbands and inverts controls because joysticks
-    // are back-right positive while robot
-    // controls are front-left positive
-    // left stick controls translation
-    // right stick controls the desired angle NOT angular rotation
-    Command driveFieldOrientedDirectAngle = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRightX(),
-        () -> driverXbox.getRightY());
-
     // Applies deadbands and inverts controls because joysticks
     // are back-right positive while robot
     // controls are front-left positive
     // left stick controls translation
     // right stick controls the angular velocity of the robot
     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRightX() * 0.5);
+        () -> MathUtil.applyDeadband(driverXbox.getLeftY() * OperatorConstants.TRANSLATION_Y_CONSTANT, OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(driverXbox.getLeftX() * OperatorConstants.TRANSLATION_X_CONSTANT, OperatorConstants.LEFT_X_DEADBAND),
+        () -> driverXbox.getRightX() * OperatorConstants.TURN_CONSTANT);
 
     Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
         () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
@@ -93,23 +86,16 @@ public class RobotContainer
     driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
     driverXbox.rightBumper().whileTrue(
-      Commands.runOnce(m_cannonSubsystem::sirenOn)
-    );
-    driverXbox.rightBumper().whileFalse(
-      Commands.runOnce(m_cannonSubsystem::sirenOff)
+      m_sirenOnCmd
     );
     
     driverXbox.x().whileTrue(
-      Commands.runOnce(m_cannonSubsystem::shooterOpen)
-    );
-    driverXbox.x().whileFalse(
-      Commands.runOnce(m_cannonSubsystem::shooterClose)
+      m_shooterOpenCmd
     );
 
     driverXbox.rightTrigger().whileTrue(
       m_cannonUpCmd
     );
-
 
     driverXbox.leftTrigger().whileTrue(
       m_cannonDownCmd
@@ -117,7 +103,6 @@ public class RobotContainer
 
 
     // driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-    // 
   }
 
   /**
