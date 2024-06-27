@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.swervedrive.AbsoluteDriveAdv;
+import frc.robot.commands.Cannon.CannonDownCmd;
+import frc.robot.commands.Cannon.CannonUpCmd;
 import frc.robot.subsystems.CannonSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -32,6 +33,9 @@ public class RobotContainer
   private final CannonSubsystem m_cannonSubsystem = new CannonSubsystem();
 
 
+  private final CannonUpCmd m_cannonUpCmd = new CannonUpCmd(m_cannonSubsystem);
+  private final CannonDownCmd m_cannonDownCmd = new CannonDownCmd(m_cannonSubsystem);
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
 
@@ -43,17 +47,7 @@ public class RobotContainer
     // Configure the trigger bindings
     configureBindings();
 
-    AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
-                                                                   () -> -MathUtil.applyDeadband(driverXbox.getLeftY(),
-                                                                                                OperatorConstants.LEFT_Y_DEADBAND),
-                                                                   () -> -MathUtil.applyDeadband(driverXbox.getLeftX(),
-                                                                                                OperatorConstants.LEFT_X_DEADBAND),
-                                                                   () -> -MathUtil.applyDeadband(driverXbox.getRightX(),
-                                                                                                OperatorConstants.RIGHT_X_DEADBAND),
-                                                                   driverXbox.getHID()::getYButtonPressed,
-                                                                   driverXbox.getHID()::getAButtonPressed,
-                                                                   driverXbox.getHID()::getXButtonPressed,
-                                                                   driverXbox.getHID()::getBButtonPressed);
+
 
     // Applies deadbands and inverts controls because joysticks
     // are back-right positive while robot
@@ -113,20 +107,17 @@ public class RobotContainer
     );
 
     driverXbox.rightTrigger().whileTrue(
-      Commands.runOnce(m_cannonSubsystem::cannonUp)
+      m_cannonUpCmd
     );
-    driverXbox.rightTrigger().whileFalse(
-      Commands.runOnce(m_cannonSubsystem::cannonStop)
-    );
+
 
     driverXbox.leftTrigger().whileTrue(
-      Commands.runOnce(m_cannonSubsystem::cannonDown)
-    );
-    driverXbox.leftTrigger().whileFalse(
-      Commands.runOnce(m_cannonSubsystem::cannonStop)
+      m_cannonDownCmd
     );
 
+
     // driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+    // 
   }
 
   /**
