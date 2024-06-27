@@ -46,9 +46,9 @@ public final class Constants
     public static final double LEFT_X_DEADBAND  = 0.1;
     public static final double LEFT_Y_DEADBAND  = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.1;
-    public static final double TURN_CONSTANT    = 6;
-    public static final double TRANSLATION_X_CONSTANT = 2;
-    public static final double TRANSLATION_Y_CONSTANT = 2;
+    public static final double TURN_CONSTANT    = 0.8;
+    public static final double TRANSLATION_X_CONSTANT = 0.8;
+    public static final double TRANSLATION_Y_CONSTANT = 0.8;
 
     public static final int DRIVER_CONTROLLER_PORT = 0;
   }
@@ -69,7 +69,7 @@ public final class Constants
 
   public static class CanonConstants {
     public static final int canonMotorID = 21;
-    public static final double canonSpeed = 0.4;
+    public static final double canonSpeed = 0.25;
     public static final double canonStop = 0;
   }
 
