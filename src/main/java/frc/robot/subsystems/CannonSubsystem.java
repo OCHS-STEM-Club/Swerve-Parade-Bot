@@ -38,6 +38,7 @@ public class CannonSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    //System.out.println(pressureSensor.getAccumulatorValue());
   }
 
   public void shooterOpen() {
