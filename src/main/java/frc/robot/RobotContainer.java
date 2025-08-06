@@ -110,11 +110,11 @@ public class RobotContainer
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand()
-  {
-    // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("New Auto");
-  }
+  // public Command getAutonomousCommand()
+  // {
+  //   // An example command will be run in autonomous
+  //   return drivebase.getAutonomousCommand("New Auto");
+  // }
 
   public void setDriveMode()
   {
