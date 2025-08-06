@@ -4,8 +4,8 @@
 
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,7 +19,7 @@ public class CannonSubsystem extends SubsystemBase {
 
   private AnalogInput pressureSensor;
 
-  private CANSparkMax cannonMotor;
+  private SparkMax cannonMotor;
 
   private WPI_TalonSRX sirenMotor;
 
@@ -28,7 +28,7 @@ public class CannonSubsystem extends SubsystemBase {
 
     pressureSensor = new AnalogInput(ShooterConstants.pressureSensorPort);
 
-    cannonMotor = new CANSparkMax(CanonConstants.canonMotorID, MotorType.kBrushless);
+    cannonMotor = new SparkMax(CanonConstants.canonMotorID, MotorType.kBrushless);
 
     sirenMotor = new WPI_TalonSRX(SirenConstants.sirenMotorID);
 
